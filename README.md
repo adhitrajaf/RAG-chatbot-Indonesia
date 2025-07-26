@@ -6,45 +6,95 @@
 [![Chatbot](https://img.shields.io/badge/Chatbot-blue?style=for-the-badge&logo=discord)](https://discord.com/)
 [![RAG](https://img.shields.io/badge/RAG-lightgrey?style=for-the-badge)](https://research.google/blog/improving-language-model-accuracy-through-retrieval/)
 
-Proyek ini adalah chatbot yang diimplementasikan dengan menggunakan arsitektur Retrieval-Augmented Generation (RAG). Chatbot ini dirancang untuk memberikan jawaban yang relevan dan informatif berdasarkan konteks dari dokumen-dokumen yang disediakan. Diharapkan chatbot ini dapat membantu pengguna dalam mencari informasi spesifik terkait sejarah dan budaya Indonesia.
+RAG Chatbot - Sejarah Kemerdekaan Indonesia
+Proyek ini adalah sebuah chatbot berbasis RAG (Retrieval-Augmented Generation) yang dirancang untuk menjawab pertanyaan seputar sejarah kemerdekaan Indonesia. Chatbot ini menggunakan data yang diambil dari Wikipedia, membangun basis pengetahuan vektor, dan menggunakan Large Language Model (LLM) dari Groq untuk menghasilkan jawaban yang relevan dan kontekstual.
 
-## Fitur Utama ✨
+Fitur Utama
+Pengambilan Data Otomatis: Mengambil artikel-artikel relevan dari Wikipedia Indonesia menggunakan requests dan BeautifulSoup.
 
-*   **📚 Retrieval-Augmented Generation (RAG):** Menggabungkan kekuatan pencarian informasi (retrieval) dengan kemampuan generatif model bahasa untuk menghasilkan jawaban yang lebih akurat dan relevan.
-*   **🇮🇩 Basis Pengetahuan Indonesia:** Dilatih dengan kumpulan data teks yang relevan dengan sejarah dan budaya Indonesia, termasuk tokoh-tokoh penting, peristiwa bersejarah, dan konsep-konsep kunci.
-*   **💬 Antarmuka Interaktif:**  Didesain agar mudah digunakan, memungkinkan pengguna untuk berinteraksi dengan chatbot melalui antarmuka yang intuitif.
+Pemrosesan Teks: Membersihkan dan membagi teks menjadi potongan-potongan (chunks) yang lebih kecil dan mudah dikelola.
 
-## Tech Stack 🛠️
+Vector Database: Membangun database vektor menggunakan FAISS untuk pencarian kemiripan (similarity search) yang cepat dan efisien.
 
-*   🐍 **Bahasa Pemrograman:** Python
-*   🤖 **Framework:** (Mungkin menggunakan framework seperti TensorFlow atau PyTorch untuk machine learning)
-*   🗄️ **Penyimpanan Data:** JSON files
+Embeddings: Mengubah potongan teks menjadi representasi vektor menggunakan model dari sentence-transformers.
 
-## Instalasi & Menjalankan 🚀
+Retrieval-Augmented Generation (RAG): Menggabungkan proses pencarian konteks yang relevan dengan kemampuan generasi teks dari LLM (Llama 3 via Groq API) untuk memberikan jawaban yang akurat.
 
-1.  Clone repositori:
-    ```bash
-    git clone https://github.com/adhitrajaf/RAG-chatbot-Indonesia
-    ```
-2.  Masuk ke direktori:
-    ```bash
-    cd RAG-chatbot-Indonesia
-    ```
-3.  Install dependensi:
-    ```bash
-    pip install -r requirements.txt
-    ```
-4.  Jalankan proyek:
-    ```bash
-    python app.py
-    ```
+Antarmuka Interaktif: Berinteraksi dengan chatbot melalui terminal (command-line).
 
-## Cara Berkontribusi 🤝
+Struktur Proyek
+.
+├── data/
+│   ├── raw_texts/      # Menyimpan hasil scrape artikel mentah
+│   ├── processed/      # Menyimpan hasil olahan teks (chunks)
+│   └── vector_db/      # Menyimpan file FAISS index dan data vektor
+├── src/
+│   ├── __init__.py
+│   ├── data_loader.py    # Modul untuk scrape data dari Wikipedia
+│   ├── embeddings.py     # Modul untuk memproses teks menjadi chunks
+│   ├── text_processor.py # Modul utilitas untuk memuat data teks
+│   ├── vector_store.py   # Modul untuk mengelola database vektor FAISS
+│   ├── retriever.py      # Modul untuk mengambil konteks yang relevan
+│   └── rag_chain.py      # Modul yang mengorkestrasi alur RAG
+├── .env                  # File untuk menyimpan API Key (TIDAK MASUK GIT)
+├── .gitignore            # Daftar file/folder yang diabaikan oleh Git
+├── app.py                # Titik masuk utama untuk menjalankan chatbot
+└── requirements.txt      # Daftar semua dependensi Python
+Instalasi & Persiapan
+Ikuti langkah-langkah berikut untuk menjalankan proyek ini di komputer Anda.
 
-Kami sangat senang menerima kontribusi dari komunitas! Ikuti langkah-langkah berikut:
+1. Clone Repositori
 
-1.  Fork repositori ini.
-2.  Buat branch baru dengan nama yang deskriptif: `git checkout -b fitur-baru` atau `git checkout -b perbaikan-bug`.
-3.  Lakukan perubahan dan commit dengan pesan yang jelas: `git commit -m "Menambahkan fitur baru"`.
-4.  Push ke branch Anda: `git push origin fitur-baru`.
-5.  Buat Pull Request ke repositori utama.
+Bash
+
+git clone https://github.com/adhitrajaf/RAG-chatbot-Indonesia.git
+cd RAG-chatbot-Indonesia
+2. Buat dan Aktifkan Virtual Environment
+Sangat disarankan untuk menggunakan virtual environment agar dependensi proyek tidak tercampur.
+
+Bash
+
+# Buat environment baru
+python -m venv venv
+
+# Aktifkan di Windows
+.\venv\Scripts\activate
+
+# Aktifkan di macOS/Linux
+source venv/bin/activate
+3. Install Dependensi
+Install semua library yang dibutuhkan dari file requirements.txt.
+
+Bash
+
+pip install -r requirements.txt
+4. Siapkan API Key
+Proyek ini membutuhkan API Key dari Groq untuk mengakses LLM.
+
+Buat file baru di folder utama bernama .env.
+
+Isi file tersebut dengan format berikut:
+
+GROQ_API_KEY="gsk_API_KEY_ANDA_DI_SINI"
+Cara Penggunaan
+Proyek ini memiliki alur kerja yang terdiri dari beberapa langkah. Jalankan skrip berikut secara berurutan dari terminal.
+
+Langkah 1: Ambil Data dari Wikipedia
+Jalankan skrip ini untuk mengunduh artikel-artikel sejarah dan menyimpannya di data/raw_texts/.
+
+Bash
+
+python -m src.data_loader
+Langkah 2: Proses Teks Menjadi Chunks
+Jalankan skrip ini untuk membaca data mentah, membersihkannya, dan membaginya menjadi file chunks yang disimpan di data/processed/text_chunks.json.
+
+Bash
+
+python -m src.embeddings
+Langkah 3: Jalankan Chatbot
+Setelah data siap, jalankan aplikasi utama. Saat pertama kali dijalankan, skrip ini akan otomatis membuat vector database dari chunks yang ada.
+
+Bash
+
+python app.py
+Selanjutnya, Anda bisa langsung berinteraksi dan mengajukan pertanyaan pada chatbot melalui terminal.
