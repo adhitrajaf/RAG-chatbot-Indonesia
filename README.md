@@ -10,17 +10,12 @@ RAG Chatbot - Sejarah Kemerdekaan Indonesia
 Proyek ini adalah sebuah chatbot berbasis RAG (Retrieval-Augmented Generation) yang dirancang untuk menjawab pertanyaan seputar sejarah kemerdekaan Indonesia. Chatbot ini menggunakan data yang diambil dari Wikipedia, membangun basis pengetahuan vektor, dan menggunakan Large Language Model (LLM) dari Groq untuk menghasilkan jawaban yang relevan dan kontekstual.
 
 Fitur Utama
-Pengambilan Data Otomatis: Mengambil artikel-artikel relevan dari Wikipedia Indonesia menggunakan requests dan BeautifulSoup.
-
-Pemrosesan Teks: Membersihkan dan membagi teks menjadi potongan-potongan (chunks) yang lebih kecil dan mudah dikelola.
-
-Vector Database: Membangun database vektor menggunakan FAISS untuk pencarian kemiripan (similarity search) yang cepat dan efisien.
-
-Embeddings: Mengubah potongan teks menjadi representasi vektor menggunakan model dari sentence-transformers.
-
-Retrieval-Augmented Generation (RAG): Menggabungkan proses pencarian konteks yang relevan dengan kemampuan generasi teks dari LLM (Llama 3 via Groq API) untuk memberikan jawaban yang akurat.
-
-Antarmuka Interaktif: Berinteraksi dengan chatbot melalui terminal (command-line).
+1. Pengambilan Data Otomatis: Mengambil artikel-artikel relevan dari Wikipedia Indonesia menggunakan requests dan BeautifulSoup.
+2. Pemrosesan Teks: Membersihkan dan membagi teks menjadi potongan-potongan (chunks) yang lebih kecil dan mudah dikelola.
+3. Vector Database: Membangun database vektor menggunakan FAISS untuk pencarian kemiripan (similarity search) yang cepat dan efisien.
+4. Embeddings: Mengubah potongan teks menjadi representasi vektor menggunakan model dari sentence-transformers.
+5. Retrieval-Augmented Generation (RAG): Menggabungkan proses pencarian konteks yang relevan dengan kemampuan generasi teks dari LLM (Llama 3 via Groq API) untuk memberikan jawaban yang akurat.
+6. Antarmuka Interaktif: Berinteraksi dengan chatbot melalui terminal (command-line).
 
 Struktur Proyek
 .
@@ -40,20 +35,15 @@ Struktur Proyek
 ├── .gitignore            # Daftar file/folder yang diabaikan oleh Git
 ├── app.py                # Titik masuk utama untuk menjalankan chatbot
 └── requirements.txt      # Daftar semua dependensi Python
+
 Instalasi & Persiapan
 Ikuti langkah-langkah berikut untuk menjalankan proyek ini di komputer Anda.
-
 1. Clone Repositori
-
-Bash
-
 git clone https://github.com/adhitrajaf/RAG-chatbot-Indonesia.git
 cd RAG-chatbot-Indonesia
+
 2. Buat dan Aktifkan Virtual Environment
 Sangat disarankan untuk menggunakan virtual environment agar dependensi proyek tidak tercampur.
-
-Bash
-
 # Buat environment baru
 python -m venv venv
 
@@ -62,39 +52,30 @@ python -m venv venv
 
 # Aktifkan di macOS/Linux
 source venv/bin/activate
+
 3. Install Dependensi
 Install semua library yang dibutuhkan dari file requirements.txt.
-
-Bash
-
 pip install -r requirements.txt
+
 4. Siapkan API Key
 Proyek ini membutuhkan API Key dari Groq untuk mengakses LLM.
-
-Buat file baru di folder utama bernama .env.
-
-Isi file tersebut dengan format berikut:
-
+a. Buat file baru di folder utama bernama .env.
+b. Isi file tersebut dengan format berikut:
 GROQ_API_KEY="gsk_API_KEY_ANDA_DI_SINI"
-Cara Penggunaan
+
+CARA PENGGUNAAN
 Proyek ini memiliki alur kerja yang terdiri dari beberapa langkah. Jalankan skrip berikut secara berurutan dari terminal.
 
 Langkah 1: Ambil Data dari Wikipedia
 Jalankan skrip ini untuk mengunduh artikel-artikel sejarah dan menyimpannya di data/raw_texts/.
-
-Bash
-
 python -m src.data_loader
+
 Langkah 2: Proses Teks Menjadi Chunks
 Jalankan skrip ini untuk membaca data mentah, membersihkannya, dan membaginya menjadi file chunks yang disimpan di data/processed/text_chunks.json.
-
-Bash
-
 python -m src.embeddings
+
 Langkah 3: Jalankan Chatbot
 Setelah data siap, jalankan aplikasi utama. Saat pertama kali dijalankan, skrip ini akan otomatis membuat vector database dari chunks yang ada.
-
-Bash
-
 python app.py
+
 Selanjutnya, Anda bisa langsung berinteraksi dan mengajukan pertanyaan pada chatbot melalui terminal.
